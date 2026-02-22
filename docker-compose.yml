@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  pole-bot:
+    build: .
+    container_name: pole-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - OLLAMA_HOST=host.docker.internal:11434
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

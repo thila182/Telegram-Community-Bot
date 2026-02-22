@@ -1,13 +1,13 @@
-# 🤖 Telegram Community Bot
+# 🤖 Telegram Pole & IA Bot
 
-![Python](https://img.shields.io/badge/python-3.12+-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Python](https://img.shields.io/badge/python-3.10+-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)
-![Community](https://img.shields.io/badge/Community-Management-orange?style=for-the-badge&logo=groups&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Ollama](https://img.shields.io/badge/Ollama-LLM-000000?style=for-the-badge) 
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 ---
 
-**Telegram Community Bot** es una solución robusta diseñada para automatizar la moderación y mejorar la interacción en grupos y comunidades de Telegram. Desde mensajes de bienvenida personalizados hasta sistemas de filtrado de spam, este bot es el aliado perfecto para cualquier administrador.
+**Telegram Pole & IA Bot** es una solución robusta diseñada para dinamizar comunidades mediante gamificación e inteligencia artificial. Integra un sistema de puntos ("La Pole"), gestión dinámica de contenido y resúmenes automáticos usando modelos LLM locales (Ollama).
 
 ---
 
@@ -15,77 +15,110 @@
 
 | Herramienta | Función |
 |---|---|
-| **Python 3.12+** | Lenguaje base para una ejecución rápida y eficiente. |
-| **python-telegram-bot** | Librería de alto nivel para interactuar con la API de Telegram. |
-| **Logging** | Sistema de registro para monitorizar eventos y errores en tiempo real. |
-| **Environment Variables** | Gestión segura de Tokens y claves de API. |
+| **Python 3.10+** | Lenguaje base con tipado estático. |
+| **pyTelegramBotAPI** | Librería principal de interacción con Telegram. |
+| **Ollama** | Motor de IA local para resúmenes (Llama3, Mistral, etc). |
+| **Docker** | Despliegue en contenedores para producción. |
+| **JSON** | Persistencia de datos ligera (Puntos, Historial, GIFs). |
 
 ---
 
-## [...](asc_slot://start-slot-1)🚀 Funcionalidades Principales
+## 🚀 Funcionalidades Principales
 
 | Categoría | Descripción |
 |---|---|
-| **Gestión de Usuarios** | Comandos para banear, expulsar (kick) o silenciar usuarios problemáticos. |
-| **Bienvenida Dinámica** | Saludos automáticos y personalizados para los nuevos integrantes. |
-| **Filtros de Seguridad** | Detección de palabras prohibidas y bloqueo de enlaces de spam. |
-| **Comandos de Ayuda** | Menú interactivo para que los usuarios conozcan las reglas del grupo. |
+| **Juego: La Pole** | Detección natural (Regex). Puntos, medallas, rachas y logros ("Francotirador"). |
+| **Resumen con IA** | Comando `!resumen` que usa **Ollama** para generar un resumen gracioso de las últimas horas. |
+| **GIFs Dinámicos** | Subida de GIFs por el Admin (privado) e invocación natural por palabra clave en el grupo. |
+| **Utilidades** | Clima (`!tiempo`), hora en China, variables dinámicas (`!set`/`!get`). |
 
 ---
 
-## [...](asc_slot://start-slot-3)📦 Instalación y Configuración
+## 📦 Instalación y Configuración
 
-Sigue estos pasos para desplegar tu bot en pocos minutos:
+### Prerrequisitos
 
-1. **Clona el repositorio:**
-   ```bash
-   git clone https://github.com/Fontihate/Telegram-Community-Bot.git
-   cd Telegram-Community-Bot
-   ```
+1.  **Ollama**: Debes tener Ollama instalado y un modelo descargado.
+    ```bash
+    # Ejemplo para descargar el modelo ligero
+    ollama pull llama3.2
+    ```
+2.  **Docker** (opcional pero recomendado).
 
-2. **Instala las dependencias:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Pasos
 
-3. **Configura tu Token:**
-   Crea un archivo `.env` en la raíz del proyecto y añade tu token de [BotFather](https://t.me/botfather):
-   ```env
-   TELEGRAM_TOKEN=tu_token_aqui
-   ```
+1.  **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/tu_usuario/tu_repo.git
+    cd tu_repo
+    ```
+
+2.  **Genera los archivos de entorno:**
+    Ejecuta el script de configuración automática:
+    ```bash
+    python setup_environment.py
+    ```
+
+3.  **Configura las credenciales:**
+    Edita el archivo `.env` generado con tus claves reales:
+    ```env
+    TELEGRAM_TOKEN=tu_token_de_botfather
+    ADMIN_ID=tu_id_numerica
+    ```
+
+4.  **Despliegue con Docker:**
+    ```bash
+    docker-compose up -d --build
+    ```
 
 ---
 
-## 📖 Modo de Uso
+## 🎮 Comandos y Uso
 
-Para poner en marcha el bot, simplemente ejecuta:
+El bot funciona mediante lenguaje natural y comandos específicos:
 
-```bash
-python main.py
+| Comando / Acción | Descripción |
+|---|---|
+| `pole` (en una frase) | Intenta hacer la pole del día. No requiere `/`. |
+| `!resumen` | Genera un resumen gracioso de la conversación reciente (Cooldown: 2h). |
+| `/ranking` | Muestra la clasificación mensual. |
+| `!tiempo <cp>` | Muestra el clima para el código postal indicado. |
+| `Admin (Privado)` | Envía un GIF al bot y este pedirá la categoría para guardarlo. |
+| `[Palabra Clave]` | Si alguien escribe una categoría de GIF guardada, el bot responderá con el GIF. |
+
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+.
+├── bot.py               # Lógica principal y handlers
+├── requirements.txt     # Dependencias Python
+├── Dockerfile           # Imagen Docker
+├── docker-compose.yml   # Orquestación
+├── setup_environment.py # Script de configuración inicial
+├── .env                 # Claves secretas (No subir a Git)
+├── datos_pole_v2.json   # Datos de usuarios y puntos (Auto-generado)
+├── gifs_dinamicos.json  # IDs de GIFs guardados (Auto-generado)
+└── historial.json       # Memoria a corto plazo para IA (Auto-generado)
 ```
-
-> [!IMPORTANT]
-> Asegúrate de darle permisos de **Administrador** al bot dentro de tu grupo de Telegram para que los comandos de moderación funcionen correctamente.
-
----
-
-## 📈 Próximas Actualizaciones
-
-- [ ] Integración con base de datos (SQLite/PostgreSQL) para estadísticas.
-- [ ] Sistema de niveles y reputación para usuarios activos.
-- [ ] Soporte para comandos de IA (GPT) para responder dudas comunes.
 
 ---
 
 ## 🤝 Contribuciones
 
-¿Quieres mejorar el bot? ¡Eres libre de hacerlo!
+Las contribuciones son bienvenidas. Por favor, asegúrate de actualizar los tests según corresponda.
 
 1. Haz un **Fork**.
-2. Crea tu rama de funciones (`git checkout -b feature/NuevaMejora`).
-3. Haz un **Commit** de tus cambios.
-4. Abre un **Pull Request**.
+2. Crea tu rama (`git checkout -b feature/NuevaMejora`).
+3. Commit tus cambios (`git commit -m 'Añade nueva funcionalidad'`).
+4. Push a la rama (`git push origin feature/NuevaMejora`).
+5. Abre un **Pull Request**.
 
 ---
 
-Hecho con ❤️ por [Fontihate](https://github.com/Fontihate)
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT.
+
+Hecho con ❤️ y Python.
