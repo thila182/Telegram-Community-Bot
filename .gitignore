@@ -1,0 +1,12 @@
+# Entorno y Python
+.env
+__pycache__/
+*.pyc
+venv/
+.idea/
+
+# Datos y Logs (importantes ignorar en git)
+*.json
+*.log
+logs/
+data/
